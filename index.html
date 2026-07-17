@@ -39,9 +39,7 @@
     --mono: "Cascadia Code", "Consolas", ui-monospace, "SF Mono", Menlo, monospace;
     --sans: "Montserrat", "Segoe UI", system-ui, -apple-system, sans-serif;
   }
-
   * { box-sizing: border-box; }
-
   body {
     margin: 0;
     background: var(--ground);
@@ -51,13 +49,10 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-
   a { color: var(--qd-blue); text-decoration: none; }
   a:hover { text-decoration: underline; }
   :focus-visible { outline: 2px solid var(--qd-yellow); outline-offset: 2px; }
-
   /* ---------- nav ---------- */
   nav {
     display: flex; align-items: center; gap: 28px;
@@ -80,7 +75,6 @@
   nav .links { display: flex; gap: 22px; margin-left: auto; }
   nav .links a { color: var(--muted); font-size: 14px; }
   nav .links a:hover { color: var(--text); text-decoration: none; }
-
   .btn {
     display: inline-block;
     font-family: var(--mono); font-size: 14px; font-weight: 700;
@@ -95,7 +89,6 @@
   .btn-primary:hover { background: #ffe15c; }
   .btn-ghost { border-color: var(--edge); color: var(--text); background: transparent; }
   .btn-ghost:hover { border-color: var(--muted); }
-
   /* ---------- hero ---------- */
   .hero {
     display: grid;
@@ -105,7 +98,6 @@
     padding-top: 72px; padding-bottom: 84px;
   }
   @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
-
   .eyebrow {
     font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--qd-yellow);
@@ -129,7 +121,6 @@
     margin-top: 18px; font-size: 13px; color: var(--faint);
     font-family: var(--mono);
   }
-
   /* ---------- chart demo ---------- */
   .terminal {
     background: var(--panel-2);
@@ -157,7 +148,6 @@
   .chip.c3 { background: var(--qd-red); }
   .chip.c4 { background: var(--qd-purple); }
   .chip.c5 { background: var(--qd-blue); }
-
   .chart {
     position: relative;
     height: 340px;
@@ -171,7 +161,6 @@
   .candle .body { position: absolute; left: 0; right: 0; border-radius: 1px; }
   .up .wick { background: #3E5C4B; } .up .body { background: #2E7D4F; }
   .dn .wick { background: #5C3E44; } .dn .body { background: #B23B48; }
-
   .lvl { position: absolute; left: 0; right: 0; height: 1px; }
   .lvl .tag {
     position: absolute; right: 8px; top: -9px;
@@ -182,7 +171,6 @@
   .lvl-pdh .tag { background: var(--pdh); }
   .lvl-pdl { top: 86%; background: var(--pdl); box-shadow: 0 0 8px rgba(46,230,230,0.5); }
   .lvl-pdl .tag { background: var(--pdl); }
-
   .obj { position: absolute; opacity: 0; border-radius: 2px; }
   .stopbox {
     left: 38%; top: 34%; width: 14%; height: 20%;
@@ -222,7 +210,6 @@
   .crosshair::before, .crosshair::after { content: ""; position: absolute; background: var(--muted); }
   .crosshair::before { left: 7px; top: 0; bottom: 0; width: 1px; }
   .crosshair::after { top: 7px; left: 0; right: 0; height: 1px; }
-
   @keyframes cross {
     0%, 4%   { opacity: 0; left: 38%; top: 34%; }
     8%, 20%  { opacity: 1; left: 38%; top: 34%; }
@@ -233,12 +220,10 @@
   @keyframes appear1 { 0%, 9% { opacity: 0; } 13%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
   @keyframes appear2 { 0%, 35% { opacity: 0; } 39%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
   @keyframes appear3 { 0%, 60% { opacity: 0; } 64%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
-
   @media (prefers-reduced-motion: reduce) {
     .obj { animation: none; opacity: 1; }
     .crosshair { animation: none; opacity: 0; }
   }
-
   .term-foot {
     display: flex; gap: 18px;
     padding: 9px 14px;
@@ -246,7 +231,6 @@
     font-family: var(--mono); font-size: 11px; color: var(--faint);
   }
   .term-foot .k { color: var(--muted); }
-
   /* ---------- sections ---------- */
   section { padding: 64px 0; border-top: 1px solid var(--grid); }
   .sec-eyebrow {
@@ -258,7 +242,6 @@
     letter-spacing: -0.01em; text-wrap: balance;
   }
   .sec-intro { color: var(--muted); max-width: 62ch; margin: 0 0 40px; }
-
   /* ---------- product grid ---------- */
   .products {
     display: grid;
@@ -318,7 +301,6 @@
   .product.ghost .btn { margin-left: auto; }
   .product.ghost h3 { color: var(--muted); margin-bottom: 4px; }
   .product.ghost p { color: var(--faint); font-size: 14px; margin: 0; }
-
   .bundle {
     margin-top: 22px;
     display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
@@ -334,7 +316,6 @@
     font-family: var(--mono); font-size: 14px; color: var(--faint);
     text-decoration: line-through;
   }
-
   /* ---------- why strip ---------- */
   .why {
     display: grid;
@@ -352,7 +333,6 @@
   .why .cell:nth-child(1) { border-color: var(--qd-yellow); }
   .why .cell:nth-child(2) { border-color: var(--qd-blue); }
   .why .cell:nth-child(3) { border-color: var(--pdl); }
-
   /* ---------- faq ---------- */
   .faq details {
     border: 1px solid var(--edge); border-radius: 6px;
@@ -373,7 +353,6 @@
   .faq details[open] summary::before { content: "–"; }
   .faq details p { margin: 0 0 18px; padding-left: 30px; color: var(--muted); font-size: 14.5px; max-width: 68ch; }
   .faq-support { margin: 28px 0 0; color: var(--muted); font-size: 14.5px; }
-
   /* ---------- footer ---------- */
   footer {
     border-top: 1px solid var(--grid);
@@ -386,7 +365,6 @@
 </style>
 </head>
 <body>
-
 <nav class="wrap">
   <span class="wordmark">FTR</span><span class="wordsub">Futures Trading Revolution</span>
   <div class="links">
@@ -397,7 +375,6 @@
   </div>
   <a class="btn btn-ghost" href="#indicators">Get the tools</a>
 </nav>
-
 <header class="hero wrap">
   <div>
     <p class="eyebrow">NinjaTrader 8 · Built by a futures trader</p>
@@ -408,7 +385,6 @@
     </div>
     <p class="note">One-time lifetime licenses · locked to your machine · free updates</p>
   </div>
-
   <div class="terminal" aria-label="Animated demo: preset drawing objects placing on a chart">
     <div class="term-head">
       <span class="sym">GC 12-26</span><span>· 5 min</span>
@@ -433,13 +409,11 @@
     </div>
   </div>
 </header>
-
 <section id="indicators">
   <div class="wrap">
     <p class="sec-eyebrow">The lineup</p>
     <h2>Indicators</h2>
     <p class="sec-intro">Every tool here exists because it was needed live, on real trades, then hardened until it could be trusted hundreds of times a day.</p>
-
     <div class="products">
       <article class="product">
         <span class="badge badge-flag">Flagship</span>
@@ -455,11 +429,10 @@
         </ul>
         <div class="buy">
           <span class="price"><span class="amt">$149</span><span class="per">one-time · lifetime license</span></span>
-          <a class="btn btn-primary" href="#faq">Get Quick Draw</a>
+          <a class="btn btn-primary" href="#faq" data-cta="quickdraw">Get Quick Draw</a>
         </div>
         <p class="trial-line">Or run it monthly: $19/mo, cancel anytime.</p>
       </article>
-
       <article class="product">
         <span class="badge badge-lvl">Key levels</span>
         <h3>PDH/L</h3>
@@ -473,11 +446,10 @@
         </ul>
         <div class="buy">
           <span class="price"><span class="amt">$49</span><span class="per">one-time · lifetime license</span></span>
-          <a class="btn btn-primary" href="#faq">Get PDH/L</a>
+          <a class="btn btn-primary" href="#faq" data-cta="pdhl">Get PDH/L</a>
         </div>
         <p class="trial-line">Also included in the full kit below.</p>
       </article>
-
       <article class="product">
         <span class="badge badge-free">Free</span>
         <h3>Watermark</h3>
@@ -490,32 +462,29 @@
         </ul>
         <div class="buy">
           <span class="price"><span class="amt">$0</span><span class="per">free · yours to keep</span></span>
-          <a class="btn btn-ghost" href="#faq">Download free</a>
+          <a class="btn btn-ghost" href="#faq" data-cta="watermark">Download free</a>
         </div>
         <p class="trial-line">Free forever. Built to FTR standards.</p>
       </article>
-
       <article class="product ghost">
         <span class="badge badge-soon">In development</span>
         <div>
           <h3>The next tool</h3>
           <p>New indicators are built the same way these were: live, on real trades, until they earn a spot here.</p>
         </div>
-        <a class="btn btn-ghost" href="mailto:support@futurestradingrevolution.com?subject=Notify%20me">Get notified</a>
+        <a class="btn btn-ghost" href="mailto:support@futurestradingrevolution.com?subject=Notify%20me" data-cta="notify">Get notified</a>
       </article>
     </div>
-
     <div class="bundle">
       <div>
         <h3>The full kit</h3>
         <p>Quick Draw + PDH/L together: every tool, one license email, lifetime updates.</p>
       </div>
       <span class="price"><span class="was">$198</span><span class="amt">$179</span><span class="per">one-time</span></span>
-      <a class="btn btn-primary" href="#faq">Get the kit</a>
+      <a class="btn btn-primary" href="#faq" data-cta="kit">Get the kit</a>
     </div>
   </div>
 </section>
-
 <section id="why">
   <div class="wrap">
     <p class="sec-eyebrow">Why these tools</p>
@@ -537,7 +506,6 @@
     </div>
   </div>
 </section>
-
 <section id="faq">
   <div class="wrap">
     <p class="sec-eyebrow">Questions</p>
@@ -571,7 +539,6 @@
     </div>
   </div>
 </section>
-
 <footer>
   <div class="wrap">
     <div class="row">
@@ -583,7 +550,6 @@
     <p class="disclaimer">Futures and forex trading contains substantial risk and is not for every investor. An investor could potentially lose all or more than the initial investment. Only risk capital should be used for trading. Past performance is not necessarily indicative of future results. These tools are chart utilities and do not constitute trading advice or signals. FTR, Futures Trading Revolution. NinjaTrader® is a registered trademark of NinjaTrader Group, LLC; no affiliation or endorsement is implied.</p>
   </div>
 </footer>
-
 <script>
   (function () {
     // deterministic candle series: [open, high, low, close] on a 0-100 scale
@@ -629,6 +595,69 @@
     }
   })();
 </script>
+<script>
+  /* =====================================================================
+     CTA WIRING  —  the ONLY block you edit to point the buy buttons.
+     ---------------------------------------------------------------------
+     TODAY (before your vendor status is live):
+       1. Paste your Kajabi email-capture URL into WAITLIST_URL below.
+       2. Leave MODE = "waitlist".
+       -> Every paid button ("Get Quick Draw", "Get PDH/L", "Get the kit")
+          relabels itself to "Notify me when it's live" and sends people to
+          your Kajabi list. Nothing can 404. No one can pay for something
+          you can't yet deliver. You collect warm leads instead.
 
+     GO LIVE (tomorrow) — flip only after BOTH are true:
+       (a) your NinjaTrader vendor licensing is ACTIVE, and
+       (b) you have personally completed ONE successful test purchase.
+       1. Paste your real checkout links into CHECKOUT below.
+       2. Change MODE to "live".
+       -> That is the entire switch. Nothing else to touch.
+
+     If WAITLIST_URL is left blank, buttons stay exactly as they are now
+     (they just scroll to the FAQ), so leaving this untouched breaks nothing.
+     ===================================================================== */
+  (function () {
+    var MODE = "waitlist";                 // "waitlist"  |  "live"
+
+    var WAITLIST_URL = "https://www.futurestradingrevolution.com/indicator-waitlist";  // Kajabi capture page
+
+    var CHECKOUT = {                       // <-- paste these when you go live
+      quickdraw: "",
+      pdhl:      "",
+      kit:       ""
+    };
+
+    var WATERMARK_URL = "";                // optional: direct free-download link (both modes)
+
+    /* ---- no edits needed below this line ---- */
+    var WAIT_LABEL = "Notify me when it's live";
+
+    function set(el, url, newLabel) {
+      if (!url) return;                    // nothing configured: leave the button as-is
+      el.setAttribute('href', url);
+      if (/^https?:/i.test(url)) {
+        el.setAttribute('target', '_blank');
+        el.setAttribute('rel', 'noopener');
+      }
+      if (newLabel) el.textContent = newLabel;
+    }
+
+    var els = document.querySelectorAll('[data-cta]');
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i], key = el.getAttribute('data-cta');
+      if (key === 'notify') {
+        set(el, WAITLIST_URL);                         // "next tool" — always the list
+      } else if (key === 'watermark') {
+        if (WATERMARK_URL) set(el, WATERMARK_URL);     // real free download if you have it
+        else set(el, WAITLIST_URL, WAIT_LABEL);        // otherwise collect the email
+      } else if (MODE === 'live') {
+        set(el, CHECKOUT[key]);                        // real checkout
+      } else {
+        set(el, WAITLIST_URL, WAIT_LABEL);             // waitlist + honest label
+      }
+    }
+  })();
+</script>
 </body>
 </html>
