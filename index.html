@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
-<title>About Jason Niehoff | FTR · Futures Trading Revolution</title>
+<title>NinjaTrader 8 Indicators | FTR · Futures Trading Revolution</title>
 <style>
   :root {
     --ground: #0B0F14;
@@ -28,7 +28,11 @@
     --muted: #8B98A5;
     --faint: #5C6875;
     --qd-yellow: #FFD62E;
+    --qd-orange: #FF9A3D;
+    --qd-red: #FF4D5E;
+    --qd-purple: #B78CFF;
     --qd-blue: #3DA6FF;
+    --pdh: #FF4DFF;
     --pdl: #2EE6E6;
     --risk: #E5484D;
     --reward: #46C46E;
@@ -44,7 +48,7 @@
     color: var(--text);
     font-family: var(--sans);
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -76,7 +80,6 @@
   nav .links { display: flex; gap: 22px; margin-left: auto; }
   nav .links a { color: var(--muted); font-size: 14px; }
   nav .links a:hover { color: var(--text); text-decoration: none; }
-  @media (max-width: 720px) { nav .links { display: none; } }
 
   .btn {
     display: inline-block;
@@ -96,32 +99,12 @@
   /* ---------- hero ---------- */
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 56px;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 48px;
     align-items: center;
-    padding-top: 72px; padding-bottom: 72px;
+    padding-top: 72px; padding-bottom: 84px;
   }
-  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 36px; } }
-
-  .portrait { position: relative; }
-  .portrait img {
-    display: block; width: 100%;
-    border-radius: 6px;
-    border: 1px solid var(--edge);
-  }
-  .nameplate {
-    position: absolute; left: -14px; bottom: 22px;
-    background: var(--qd-yellow); color: #141000;
-    padding: 10px 16px; border-radius: 3px;
-  }
-  .nameplate strong {
-    display: block; font-family: var(--sans); font-weight: 800; font-size: 18px;
-    line-height: 1.2;
-  }
-  .nameplate span {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } }
 
   .eyebrow {
     font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
@@ -137,242 +120,545 @@
     text-wrap: balance;
   }
   .hero h1 .hl { color: var(--qd-yellow); }
-  .hero p.lede { color: var(--muted); font-size: 18px; margin: 0; max-width: 56ch; }
-
-  /* ---------- movements ---------- */
-  .movement {
-    border-top: 1px solid var(--grid);
-    padding-top: 56px; padding-bottom: 56px;
+  .hero p.lede {
+    color: var(--muted); font-size: 17px; max-width: 46ch;
+    margin: 0 0 30px;
   }
-  .movement .inner { max-width: 720px; }
-  .movement h2 {
-    font-family: var(--sans); font-weight: 800; font-size: 26px;
-    margin: 0 0 20px; letter-spacing: -0.01em;
+  .hero .ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero .note {
+    margin-top: 18px; font-size: 13px; color: var(--faint);
+    font-family: var(--mono);
   }
-  .movement p { color: var(--muted); margin: 0 0 18px; }
-  .movement p:last-child { margin-bottom: 0; }
-  .movement p strong { color: var(--text); font-weight: 700; }
 
-  /* ---------- signature strip ---------- */
-  .strip {
-    margin: 40px 0 8px;
-    border: 1px solid var(--grid);
-    border-radius: 6px;
+  /* ---------- chart demo ---------- */
+  .terminal {
     background: var(--panel-2);
-    padding: 18px 18px 8px;
+    border: 1px solid var(--edge);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,214,46,0.04);
   }
-  .strip svg { display: block; width: 100%; height: auto; }
-  .strip figcaption {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--faint);
-    padding: 10px 4px 8px;
+  .term-head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--grid);
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+  }
+  .term-head .sym { color: var(--text); font-weight: 700; }
+  .chips { display: flex; gap: 6px; margin-left: auto; }
+  .chip {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    padding: 3px 8px; border-radius: 3px; color: #10130a;
+    opacity: 0.9;
+  }
+  .chip:hover { opacity: 1; }
+  .chip.c1 { background: var(--qd-yellow); }
+  .chip.c2 { background: var(--qd-orange); }
+  .chip.c3 { background: var(--qd-red); }
+  .chip.c4 { background: var(--qd-purple); }
+  .chip.c5 { background: var(--qd-blue); }
+
+  .chart {
+    position: relative;
+    height: 340px;
+    background:
+      repeating-linear-gradient(to right, transparent 0 79px, var(--grid) 79px 80px),
+      repeating-linear-gradient(to bottom, transparent 0 56px, var(--grid) 56px 57px);
+  }
+  #candles { position: absolute; inset: 0; }
+  .candle { position: absolute; }
+  .candle .wick { position: absolute; left: 50%; width: 1px; margin-left: -0.5px; }
+  .candle .body { position: absolute; left: 0; right: 0; border-radius: 1px; }
+  .up .wick { background: #3E5C4B; } .up .body { background: #2E7D4F; }
+  .dn .wick { background: #5C3E44; } .dn .body { background: #B23B48; }
+
+  .lvl { position: absolute; left: 0; right: 0; height: 1px; }
+  .lvl .tag {
+    position: absolute; right: 8px; top: -9px;
+    font-family: var(--mono); font-size: 10px; padding: 1px 6px; border-radius: 2px;
+    color: #0B0F14; font-weight: 700;
+  }
+  .lvl-pdh { top: 14%; background: var(--pdh); box-shadow: 0 0 8px rgba(255,77,255,0.5); }
+  .lvl-pdh .tag { background: var(--pdh); }
+  .lvl-pdl { top: 86%; background: var(--pdl); box-shadow: 0 0 8px rgba(46,230,230,0.5); }
+  .lvl-pdl .tag { background: var(--pdl); }
+
+  .obj { position: absolute; opacity: 0; border-radius: 2px; }
+  .stopbox {
+    left: 38%; top: 34%; width: 14%; height: 20%;
+    border: 1px solid var(--qd-yellow);
+    background: rgba(255,214,46,0.12);
+    box-shadow: 0 0 16px rgba(255,214,46,0.25);
+    animation: appear1 9s infinite;
+  }
+  .stopbox .lbl, .rr .lbl {
+    position: absolute; top: -20px; left: 0;
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    color: var(--qd-yellow); white-space: nowrap;
+  }
+  .rayline {
+    left: 62%; top: 51.5%; right: 0; height: 1px;
+    background: var(--qd-blue);
+    box-shadow: 0 0 8px rgba(61,166,255,0.55);
+    animation: appear2 9s infinite;
+  }
+  .rr { left: 74%; width: 16%; }
+  .rr-risk {
+    top: 58%; height: 13%;
+    border: 1px solid var(--risk); background: rgba(229,72,77,0.14);
+    animation: appear3 9s infinite;
+  }
+  .rr-reward {
+    top: 32%; height: 26%;
+    border: 1px solid var(--reward); background: rgba(70,196,110,0.13);
+    animation: appear3 9s infinite;
+  }
+  .rr-reward .lbl { color: var(--reward); }
+  .crosshair {
+    position: absolute; width: 15px; height: 15px; margin: -7px;
+    opacity: 0;
+    animation: cross 9s infinite;
+  }
+  .crosshair::before, .crosshair::after { content: ""; position: absolute; background: var(--muted); }
+  .crosshair::before { left: 7px; top: 0; bottom: 0; width: 1px; }
+  .crosshair::after { top: 7px; left: 0; right: 0; height: 1px; }
+
+  @keyframes cross {
+    0%, 4%   { opacity: 0; left: 38%; top: 34%; }
+    8%, 20%  { opacity: 1; left: 38%; top: 34%; }
+    30%, 44% { opacity: 1; left: 62%; top: 51.5%; }
+    54%, 68% { opacity: 1; left: 74%; top: 58%; }
+    76%, 100%{ opacity: 0; left: 74%; top: 58%; }
+  }
+  @keyframes appear1 { 0%, 9% { opacity: 0; } 13%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
+  @keyframes appear2 { 0%, 35% { opacity: 0; } 39%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
+  @keyframes appear3 { 0%, 60% { opacity: 0; } 64%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .obj { animation: none; opacity: 1; }
+    .crosshair { animation: none; opacity: 0; }
   }
 
-  /* ---------- what it is / is not ---------- */
-  .isnt {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
-    margin-top: 36px;
+  .term-foot {
+    display: flex; gap: 18px;
+    padding: 9px 14px;
+    border-top: 1px solid var(--grid);
+    font-family: var(--mono); font-size: 11px; color: var(--faint);
   }
-  @media (max-width: 760px) { .isnt { grid-template-columns: 1fr; } }
-  .isnt .cell {
-    background: var(--panel); border: 1px solid var(--grid);
-    border-radius: 6px; padding: 24px;
-  }
-  .isnt .cell.yes { border-top: 2px solid var(--reward); }
-  .isnt .cell.no { border-top: 2px solid var(--risk); }
-  .isnt h3 {
-    font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em;
-    text-transform: uppercase; margin: 0 0 14px;
-  }
-  .isnt .yes h3 { color: var(--reward); }
-  .isnt .no h3 { color: var(--risk); }
-  .isnt p { color: var(--muted); font-size: 15px; margin: 0; }
+  .term-foot .k { color: var(--muted); }
 
-  /* ---------- CTA row ---------- */
-  .paths {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 18px; margin-top: 40px;
+  /* ---------- sections ---------- */
+  section { padding: 64px 0; border-top: 1px solid var(--grid); }
+  .sec-eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint); margin: 0 0 10px;
   }
-  .paths a.card {
-    display: flex; flex-direction: column; gap: 6px;
-    background: var(--panel); border: 1px solid var(--grid);
-    border-radius: 6px; padding: 20px 22px;
-    color: var(--text);
+  section h2 {
+    font-family: var(--sans); font-weight: 800; font-size: 28px; margin: 0 0 12px;
+    letter-spacing: -0.01em; text-wrap: balance;
   }
-  .paths a.card:hover { border-color: var(--edge); text-decoration: none; }
-  .paths .card .label {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--qd-yellow);
+  .sec-intro { color: var(--muted); max-width: 62ch; margin: 0 0 40px; }
+
+  /* ---------- product grid ---------- */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 22px;
   }
-  .paths .card .name { font-weight: 700; font-size: 16px; }
-  .paths .card .sub { color: var(--faint); font-size: 13px; }
+  .product {
+    display: flex; flex-direction: column;
+    background: var(--panel);
+    border: 1px solid var(--edge);
+    border-radius: 8px;
+    padding: 26px;
+  }
+  .product .badge {
+    align-self: flex-start;
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 3px; margin-bottom: 16px;
+  }
+  .badge-flag { background: rgba(255,214,46,0.14); color: var(--qd-yellow); border: 1px solid rgba(255,214,46,0.35); }
+  .badge-lvl { background: rgba(255,77,255,0.12); color: var(--pdh); border: 1px solid rgba(255,77,255,0.3); }
+  .badge-soon { background: rgba(139,152,165,0.1); color: var(--muted); border: 1px solid var(--edge); }
+  .badge-free { background: rgba(46,230,230,0.1); color: var(--pdl); border: 1px solid rgba(46,230,230,0.3); }
+  .product h3 { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 0 0 6px; }
+  .product .tagline { color: var(--muted); font-size: 15px; margin: 0 0 20px; }
+  .product ul {
+    list-style: none; margin: 0 0 24px; padding: 0;
+    display: flex; flex-direction: column; gap: 9px;
+    font-size: 14px; color: var(--text);
+  }
+  .product li { padding-left: 20px; position: relative; }
+  .product li::before {
+    content: "»"; position: absolute; left: 0;
+    font-family: var(--mono); color: var(--faint);
+  }
+  .product .buy {
+    margin-top: auto;
+    display: flex; align-items: center; gap: 16px;
+    padding-top: 20px; border-top: 1px solid var(--grid);
+    min-height: 88px;
+  }
+  .price { font-family: var(--mono); }
+  .price .amt { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .price .per { display: block; font-size: 11px; color: var(--faint); }
+  .buy .btn { margin-left: auto; white-space: nowrap; min-width: 170px; text-align: center; }
+  .trial-line {
+    margin-top: 12px; font-size: 12.5px; color: var(--faint);
+    font-family: var(--mono);
+  }
+  .product.ghost {
+    grid-column: 1 / -1;
+    border-style: dashed; background: transparent;
+    flex-direction: row; align-items: center; gap: 24px; flex-wrap: wrap;
+    padding: 22px 26px;
+  }
+  .product.ghost .badge { margin-bottom: 0; }
+  .product.ghost .btn { margin-left: auto; }
+  .product.ghost h3 { color: var(--muted); margin-bottom: 4px; }
+  .product.ghost p { color: var(--faint); font-size: 14px; margin: 0; }
+
+  .bundle {
+    margin-top: 22px;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    background: linear-gradient(90deg, rgba(255,214,46,0.07), rgba(255,77,255,0.05));
+    border: 1px solid rgba(255,214,46,0.3);
+    border-radius: 8px;
+    padding: 20px 26px;
+  }
+  .bundle h3 { font-family: var(--sans); font-weight: 700; font-size: 18px; margin: 0; }
+  .bundle p { margin: 0; color: var(--muted); font-size: 14px; }
+  .bundle .price { margin-left: auto; display: flex; align-items: baseline; gap: 10px; }
+  .bundle .was {
+    font-family: var(--mono); font-size: 14px; color: var(--faint);
+    text-decoration: line-through;
+  }
+
+  /* ---------- why strip ---------- */
+  .why {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 22px;
+  }
+  .why .cell {
+    border-left: 2px solid var(--edge);
+    padding-left: 18px;
+  }
+  .why .cell h4 {
+    font-family: var(--sans); font-weight: 700; font-size: 15px; margin: 0 0 6px;
+  }
+  .why .cell p { font-size: 14px; color: var(--muted); margin: 0; }
+  .why .cell:nth-child(1) { border-color: var(--qd-yellow); }
+  .why .cell:nth-child(2) { border-color: var(--qd-blue); }
+  .why .cell:nth-child(3) { border-color: var(--pdl); }
+
+  /* ---------- ecosystem ---------- */
+  .eco-logos { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 26px; }
+  .eco-logos a {
+    background: #ffffff; border-radius: 6px; padding: 14px 24px;
+    display: flex; align-items: center;
+  }
+  .eco-logos img { height: 34px; width: auto; display: block; }
+
+  /* ---------- faq ---------- */
+  .faq details {
+    border: 1px solid var(--edge); border-radius: 6px;
+    background: var(--panel);
+    margin-bottom: 12px;
+    padding: 0 20px;
+  }
+  .faq summary {
+    cursor: pointer; padding: 16px 0;
+    font-family: var(--sans); font-size: 15px; font-weight: 600;
+    list-style: none; display: flex; align-items: center;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::before {
+    content: "+"; font-family: var(--mono); color: var(--qd-yellow);
+    margin-right: 14px; font-size: 18px; width: 16px;
+  }
+  .faq details[open] summary::before { content: "–"; }
+  .faq details p { margin: 0 0 18px; padding-left: 30px; color: var(--muted); font-size: 14.5px; max-width: 68ch; }
+  .faq-support { margin: 28px 0 0; color: var(--muted); font-size: 14.5px; }
 
   /* ---------- footer ---------- */
   footer {
     border-top: 1px solid var(--grid);
-    padding-top: 36px; padding-bottom: 48px;
-    margin-top: 24px;
+    padding: 40px 0 56px;
+    font-size: 13px; color: var(--faint);
   }
-  footer .row {
-    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  footer .row a { color: var(--muted); font-size: 14px; }
-  footer .disclaimer { color: var(--faint); font-size: 12.5px; max-width: 84ch; }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
-  }
+  footer .row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+  footer .row a { color: var(--muted); }
+  .disclaimer { max-width: 88ch; line-height: 1.7; }
 </style>
 </head>
 <body>
 
 <nav class="wrap">
   <span class="wordmark">FTR</span><span class="wordsub">Futures Trading Revolution</span>
-  <span class="links">
-    <a href="https://futurestradingrevolution.com">Home</a>
-    <a href="https://indicators.futurestradingrevolution.com">Indicators</a>
-    <a href="https://coaching.futurestradingrevolution.com">Coaching</a>
-    <a href="https://grade.futurestradingrevolution.com">Scorecard</a>
-    <a href="mailto:support@futurestradingrevolution.com">Support</a>
-  </span>
+  <div class="links">
+    <a href="#indicators">Indicators</a>
+    <a href="#why">Why us</a>
+    <a href="#faq">FAQ</a>
+    <a href="#faq">Support</a>
+  </div>
+  <a class="btn btn-ghost" href="#indicators">Get the tools</a>
 </nav>
 
 <header class="hero wrap">
-  <div class="portrait">
-    <!-- Drop your homepage portrait into the repo as jason-niehoff.jpg, or update this src -->
-    <img src="jason-niehoff.jpg" alt="Jason Niehoff performing on gongs with the National Symphony Orchestra">
-    <div class="nameplate">
-      <strong>Jason Niehoff</strong>
-      <span>Founder &middot; Head Coach</span>
-    </div>
-  </div>
   <div>
-    <p class="eyebrow">The full story</p>
-    <h1>No do-overs on stage. <span class="hl">None at the hard right edge.</span></h1>
-    <p class="lede">I'm Jason Niehoff. I've spent 22 years performing as a professional percussionist, 14 of them in the US Navy Band, and today I perform regularly with the National Symphony Orchestra. I also trade futures. This page is the story of why those are the same job.</p>
+    <p class="eyebrow">NinjaTrader 8 · Built by a futures trader</p>
+    <h1>Charting tools that keep up with <span class="hl">how fast you actually trade</span>.</h1>
+    <p class="lede">Precision indicators for NinjaTrader 8: pre-measured drawing objects on hotkeys, automatic key levels, and risk you can see before you click the trigger.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="#indicators">Browse indicators</a>
+    </div>
+    <p class="note">One-time lifetime licenses · locked to your machine · free updates</p>
+  </div>
+
+  <div class="terminal" aria-label="Animated demo: preset drawing objects placing on a chart">
+    <div class="term-head">
+      <span class="sym">GC 12-26</span><span>· 5 min</span>
+      <div class="chips">
+        <span class="chip c1">21▼</span><span class="chip c2">24▼</span><span class="chip c3">30▼</span><span class="chip c4">33▼</span><span class="chip c5">Ray</span>
+      </div>
+    </div>
+    <div class="chart">
+      <div id="candles"></div>
+      <div class="lvl lvl-pdh"><span class="tag">PDH</span></div>
+      <div class="lvl lvl-pdl"><span class="tag">PDL</span></div>
+      <div class="obj stopbox"><span class="lbl">24▼ · one tap</span></div>
+      <div class="obj rayline"></div>
+      <div class="obj rr rr-reward"><span class="lbl">2R target</span></div>
+      <div class="obj rr rr-risk"></div>
+      <div class="crosshair"></div>
+    </div>
+    <div class="term-foot">
+      <span><span class="k">Ctrl+2</span> stop box</span>
+      <span><span class="k">Ctrl+5</span> ray</span>
+      <span><span class="k">Ctrl+6</span> risk:reward</span>
+    </div>
   </div>
 </header>
 
-<section class="movement">
-  <div class="wrap"><div class="inner">
-    <p class="eyebrow">Movement I &middot; The stage</p>
-    <h2>A concert hall is an honest place.</h2>
-    <p>When the lights come up, nobody cares how you felt in the warmup room. There is one take. The orchestra doesn't stop because your hands are cold, and the audience doesn't grade on effort. Twenty-two years of performing at that level, through 14 years in the US Navy Band and season after season with the National Symphony Orchestra, teaches you something that never appears on the program: <strong>the performance is decided before it starts.</strong></p>
-    <p>It's decided in the practice room. Slow tempos before fast ones. The hard two bars isolated and repeated until they stop being hard. Recording yourself and listening back to what you actually played, not what you hoped you played. Musicians call this deliberate practice, and it is the least glamorous, most reliable technology humans have ever invented for performing under pressure.</p>
-  </div></div>
-</section>
+<section id="indicators">
+  <div class="wrap">
+    <p class="sec-eyebrow">The lineup</p>
+    <h2>Indicators</h2>
+    <p class="sec-intro">Every tool here exists because it was needed live, on real trades, then hardened until it could be trusted hundreds of times a day.</p>
 
-<section class="movement">
-  <div class="wrap"><div class="inner">
-    <p class="eyebrow">Movement II &middot; The chart</p>
-    <h2>Then I met a stage with no rehearsal.</h2>
-    <p>Futures trading looked, from the outside, like a completely different world. It isn't. The chart is a live performance that never stops, and the hard right edge, the newest bar, where you have to act without knowing what comes next, does not care about your confidence any more than a concert hall does. Winging it does not survive contact with either one.</p>
-    <p>Today I trade micro futures, MES, MGC, and MCL, on NinjaTrader, every trade journaled and reviewed the way a musician reviews a recording. <strong>Not because journaling is fun. Because feedback you don't collect is feedback you don't get.</strong> The market gives you an honest grade every single session; most traders just never write it down.</p>
-  </div></div>
-</section>
+    <div class="products">
+      <article class="product">
+        <span class="badge badge-flag">Flagship</span>
+        <h3>Quick Draw</h3>
+        <p class="tagline">Your exact risk. One click. Every time.</p>
+        <ul>
+          <li>Up to 8 drawing slots across 9 tool types: boxes, risk:reward layouts, rays, lines, fibs, notes, arrows</li>
+          <li>Define each slot once: exact tick sizes, R multiples, colors or NinjaTrader templates, its own hotkey</li>
+          <li>From then on it's one tap: your pre-measured object lands at the cursor, correct every time</li>
+          <li>Hotkeys + mouse-button friendly: hover, tap, placed</li>
+          <li>Loads clean: no presets you didn't choose, your setup is entirely yours</li>
+          <li>Crash-proof: objects survive restarts, unsaved workspaces, even power loss</li>
+        </ul>
+        <div class="buy">
+          <span class="price"><span class="amt">$149</span><span class="per">one-time · lifetime license</span></span>
+          <a class="btn btn-primary" href="#faq">Get Quick Draw</a>
+        </div>
+        <p class="trial-line">Or run it monthly: $19/mo, cancel anytime.</p>
+      </article>
 
-<section class="movement">
-  <div class="wrap"><div class="inner">
-    <p class="eyebrow">Movement III &middot; The practice room</p>
-    <h2>Practice is practice.</h2>
-    <p>No musician hopes their way through a concerto. You slow it down, you isolate the passage that keeps breaking, you repeat it with honest feedback until it holds, and then you perform it at tempo. That exact loop is how trading discipline is actually built: one setup at a time, sized small, journaled honestly, reviewed without flinching, then executed live.</p>
-    <p>Everything I teach, and every tool I build, is that loop in a different costume.</p>
-    <figure class="strip">
-      <svg viewBox="0 0 800 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A metronome practice pattern on the left transitions into price candles on the right">
-        <line x1="0" y1="60" x2="800" y2="60" stroke="#1C242E" stroke-width="1"/>
-        <!-- practice ticks: even, measured -->
-        <g stroke="#8B98A5" stroke-width="3">
-          <line x1="40"  y1="42" x2="40"  y2="78"/>
-          <line x1="90"  y1="42" x2="90"  y2="78"/>
-          <line x1="140" y1="42" x2="140" y2="78"/>
-          <line x1="190" y1="42" x2="190" y2="78"/>
-          <line x1="240" y1="42" x2="240" y2="78"/>
-          <line x1="290" y1="42" x2="290" y2="78"/>
-        </g>
-        <line x1="340" y1="36" x2="340" y2="84" stroke="#FFD62E" stroke-width="3"/>
-        <!-- performance candles -->
-        <g>
-          <line x1="400" y1="30" x2="400" y2="90" stroke="#46C46E" stroke-width="2"/>
-          <rect x="392" y="44" width="16" height="30" fill="#46C46E"/>
-          <line x1="450" y1="26" x2="450" y2="80" stroke="#E5484D" stroke-width="2"/>
-          <rect x="442" y="36" width="16" height="28" fill="#E5484D"/>
-          <line x1="500" y1="34" x2="500" y2="88" stroke="#46C46E" stroke-width="2"/>
-          <rect x="492" y="46" width="16" height="26" fill="#46C46E"/>
-          <line x1="550" y1="22" x2="550" y2="72" stroke="#46C46E" stroke-width="2"/>
-          <rect x="542" y="30" width="16" height="28" fill="#46C46E"/>
-          <line x1="600" y1="18" x2="600" y2="66" stroke="#E5484D" stroke-width="2"/>
-          <rect x="592" y="26" width="16" height="24" fill="#E5484D"/>
-          <line x1="650" y1="24" x2="650" y2="70" stroke="#46C46E" stroke-width="2"/>
-          <rect x="642" y="32" width="16" height="26" fill="#46C46E"/>
-          <line x1="700" y1="14" x2="700" y2="58" stroke="#46C46E" stroke-width="2"/>
-          <rect x="692" y="22" width="16" height="24" fill="#46C46E"/>
-        </g>
-      </svg>
-      <figcaption>Practice tempo on the left. Performance on the right. Same discipline.</figcaption>
-    </figure>
-  </div></div>
-</section>
+      <article class="product">
+        <span class="badge badge-lvl">Key levels</span>
+        <h3>PDH/L</h3>
+        <p class="tagline">Yesterday's high and low, exactly where you need them.</p>
+        <ul>
+          <li>Previous-day high and low drawn automatically on today's session</li>
+          <li>Configurable read window: RTH, overnight, or any custom hours</li>
+          <li>Independent styling per line, with optional price labels</li>
+          <li>Touch alerts the moment price tags either level, re-armed daily</li>
+          <li>Performance-tuned: instant loads even on heavy tick charts</li>
+        </ul>
+        <div class="buy">
+          <span class="price"><span class="amt">$49</span><span class="per">one-time · lifetime license</span></span>
+          <a class="btn btn-primary" href="#faq">Get PDH/L</a>
+        </div>
+        <p class="trial-line">Also included in the full kit below.</p>
+      </article>
 
-<section class="movement">
-  <div class="wrap"><div class="inner">
-    <p class="eyebrow">Movement IV &middot; The work</p>
-    <h2>Futures Trading Revolution is that loop, built out.</h2>
-    <p>FTR is where I teach trading the way professional skills are actually built. A year-long 1:1 coaching program structured like serious study: foundation first, then application, then independence. A free scorecard that grades your trading behavior from your own NinjaTrader data, because you can't fix what you won't measure. A YouTube channel of practical, no-fluff NinjaTrader work. And tools I built for my own charts, hardened live before they were ever offered to anyone else.</p>
+      <article class="product">
+        <span class="badge badge-free">Free</span>
+        <h3>Watermark</h3>
+        <p class="tagline">Your instrument and date, stamped on every chart.</p>
+        <ul>
+          <li>Plots the instrument and session date automatically, always current</li>
+          <li>Or set your own text: account name, desk rules, anything</li>
+          <li>Position, font, color, and opacity fully configurable</li>
+          <li>Zero performance cost, loads instantly on any chart</li>
+        </ul>
+        <div class="buy">
+          <span class="price"><span class="amt">$0</span><span class="per">free · yours to keep</span></span>
+          <a class="btn btn-ghost" href="#faq">Download free</a>
+        </div>
+        <p class="trial-line">Free forever. Built to FTR standards.</p>
+      </article>
 
-    <div class="isnt">
-      <div class="cell yes">
-        <h3>What you'll find here</h3>
-        <p>Process, structure, honest measurement, deliberate practice, and tools that respect how discretionary traders actually work.</p>
-      </div>
-      <div class="cell no">
-        <h3>What you won't</h3>
-        <p>Signals, hype, profit promises, rented lifestyles, or anyone telling you trading is easy. It isn't. That's exactly why it can be practiced.</p>
-      </div>
+      <article class="product ghost">
+        <span class="badge badge-soon">In development</span>
+        <div>
+          <h3>The next tool</h3>
+          <p>New indicators are built the same way these were: live, on real trades, until they earn a spot here.</p>
+        </div>
+        <a class="btn btn-ghost" href="mailto:support@futurestradingrevolution.com?subject=Notify%20me">Get notified</a>
+      </article>
     </div>
 
-    <div class="paths">
-      <a class="card" href="https://grade.futurestradingrevolution.com">
-        <span class="label">Free</span>
-        <span class="name">Grade your trading</span>
-        <span class="sub">The FTR Trait Scorecard</span>
+    <div class="bundle">
+      <div>
+        <h3>The full kit</h3>
+        <p>Quick Draw + PDH/L together: every tool, one license email, lifetime updates.</p>
+      </div>
+      <span class="price"><span class="was">$198</span><span class="amt">$179</span><span class="per">one-time</span></span>
+      <a class="btn btn-primary" href="#faq">Get the kit</a>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <p class="sec-eyebrow">Why these tools</p>
+    <h2>Built at the hard right edge</h2>
+    <p class="sec-intro">Not a dev shop guessing what traders want. A trader building what the platform is missing.</p>
+    <div class="why">
+      <div class="cell">
+        <h4>Trader-built</h4>
+        <p>Every feature was used hundreds of times in live sessions before it shipped. If it slowed the workflow down, it didn't survive.</p>
+      </div>
+      <div class="cell">
+        <h4>Licensed &amp; supported</h4>
+        <p>Machine-locked licensing through NinjaTrader's vendor system, with updates for the life of the product.</p>
+      </div>
+      <div class="cell">
+        <h4>Crash-proof by design</h4>
+        <p>Quick Draw saves your objects to disk the moment they're placed. Restarts, crashes, unsaved workspaces: your levels come back.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="sec-eyebrow">Questions</p>
+    <h2>FAQ</h2>
+    <div class="faq">
+      <details>
+        <summary>How does the Quick Draw monthly option work?</summary>
+        <p>Quick Draw is also available for $19 per month with full features, so you can run it in your live workflow before committing to the lifetime license. Cancel anytime and the license simply expires at the end of the billing period. Monthly payments do not apply toward the lifetime price. The monthly option is available for Quick Draw only.</p>
+      </details>
+      <details>
+        <summary>What is your refund policy?</summary>
+        <p>All sales are final, which is standard for downloadable trading software. If you want to evaluate Quick Draw before committing, the $19 monthly option gives you the full product with no long-term obligation. Questions before you buy? Email support and ask anything.</p>
+      </details>
+      <details>
+        <summary>How is the license delivered?</summary>
+        <p>Immediately. Checkout delivers your import file right away with a three-day open window built in, so you can be on your charts within minutes while your permanent license is activated against your Machine ID through NinjaTrader's vendor licensing system. No waiting, no gap in access.</p>
+      </details>
+      <details>
+        <summary>How do I install an indicator?</summary>
+        <p>Tools &gt; Import &gt; NinjaScript Add-On in NinjaTrader 8, select the downloaded .zip, restart NinjaTrader. Every purchase includes a step-by-step setup guide with screenshots.</p>
+      </details>
+      <details>
+        <summary>What version of NinjaTrader do I need?</summary>
+        <p>NinjaTrader 8 (any recent build) on Windows. These tools do not support NinjaTrader 7.</p>
+      </details>
+      <details>
+        <summary>Do updates cost extra?</summary>
+        <p>No. Lifetime licenses include every update to that product. Improvements ship to all customers as new importable versions.</p>
+      </details>
+      <p class="faq-support">Something else? Email <a href="mailto:support@futurestradingrevolution.com">support@futurestradingrevolution.com</a>
+      <a href="https://www.futurestradingrevolution.com/disclaimer">Disclosures</a> and ask. Support goes to the person who built the tools.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ecosystem">
+  <div class="wrap">
+    <p class="sec-eyebrow">Ecosystem</p>
+    <h2>An official NinjaTrader Ecosystem vendor</h2>
+    <p class="sec-intro">FTR tools are licensed and delivered through NinjaTrader's own vendor system, with market data from Kinetick.</p>
+    <div class="eco-logos">
+      <!-- Swap this href for your custom NinjaTrader affiliate link when it is issued -->
+      <a href="https://ninjatrader.com" target="_blank" rel="noopener">
+        <img src="ninjatrader-wordmark.png" alt="NinjaTrader">
       </a>
-      <a class="card" href="https://indicators.futurestradingrevolution.com">
-        <span class="label">Tools</span>
-        <span class="name">Browse the indicators</span>
-        <span class="sub">Built for NinjaTrader 8</span>
-      </a>
-      <a class="card" href="https://www.youtube.com/channel/UCu-KvQkcbJjt_CUi6bFaGkw">
-        <span class="label">Watch</span>
-        <span class="name">The channel</span>
-        <span class="sub">Practical NinjaTrader work</span>
-      </a>
-      <a class="card" href="https://coaching.futurestradingrevolution.com">
-        <span class="label">1:1</span>
-        <span class="name">Work with me</span>
-        <span class="sub">A year of structured practice</span>
+      <a href="https://kinetick.com/NinjaTrader" target="_blank" rel="noopener">
+        <img src="kinetick-logo.png" alt="Kinetick">
       </a>
     </div>
-  </div></div>
+  </div>
 </section>
 
 <footer>
   <div class="wrap">
     <div class="row">
-      <span class="wordmark">FTR</span>
-      <a href="https://futurestradingrevolution.com">Home</a>
-      <a href="https://indicators.futurestradingrevolution.com">Indicators</a>
-      <a href="https://coaching.futurestradingrevolution.com">Coaching</a>
+      <span class="wordmark">FTR</span><span class="wordsub">Futures Trading Revolution</span>
       <a href="mailto:support@futurestradingrevolution.com">support@futurestradingrevolution.com</a>
-      <a href="https://www.futurestradingrevolution.com/disclaimer">Disclosures</a>
+      <a href="#indicators">Indicators</a>
+      <a href="#faq">FAQ</a>
     </div>
-    <p class="disclaimer">FTR, Futures Trading Revolution. Nothing on this site is a recommendation to buy or sell any financial instrument.</p>
+    <p class="disclaimer">These tools are charting and workflow utilities. They do not generate trade signals, predict price movement, or constitute trading advice. FTR, Futures Trading Revolution.</p>
     <p class="disclaimer"><strong>Risk Disclosure:</strong> Futures and forex trading contains substantial risk and is not for every investor. An investor could potentially lose all or more than the initial investment. Risk capital is money that can be lost without jeopardizing ones' financial security or lifestyle. Only risk capital should be used for trading and only those with sufficient risk capital should consider trading. Past performance is not necessarily indicative of future results.</p>
     <p class="disclaimer"><strong>Hypothetical Performance Disclosure:</strong> Hypothetical performance results have many inherent limitations, some of which are described below. No representation is being made that any account will or is likely to achieve profits or losses similar to those shown; in fact, there are frequently sharp differences between hypothetical performance results and the actual results subsequently achieved by any particular trading program. One of the limitations of hypothetical performance results is that they are generally prepared with the benefit of hindsight. In addition, hypothetical trading does not involve financial risk, and no hypothetical trading record can completely account for the impact of financial risk of actual trading. for example, the ability to withstand losses or to adhere to a particular trading program in spite of trading losses are material points which can also adversely affect actual trading results. There are numerous other factors related to the markets in general or to the implementation of any specific trading program which cannot be fully accounted for in the preparation of hypothetical performance results and all which can adversely affect trading results.</p>
     <p class="disclaimer"><strong>Testimonial Disclosure:</strong> Testimonials appearing on this website may not be representative of other clients or customers and is not a guarantee of future performance or success.</p>
     <p class="disclaimer">NinjaTrader is a registered trademark of NinjaTrader Group, LLC. FTR is an independent vendor in the NinjaTrader Ecosystem and is not owned or operated by NinjaTrader Group, LLC.</p>
   </div>
 </footer>
+
+<script>
+  (function () {
+    // deterministic candle series: [open, high, low, close] on a 0-100 scale
+    var data = [
+      [46,52,44,50],[50,55,48,53],[53,57,51,52],[52,54,47,48],[48,50,43,45],
+      [45,49,42,47],[47,53,46,52],[52,58,51,56],[56,60,54,55],[55,57,50,51],
+      [51,53,46,48],[48,52,45,50],[50,56,49,55],[55,61,53,58],[58,63,56,60],
+      [60,62,55,57],[57,59,52,53],[53,55,48,50],[50,54,47,52],[52,57,50,55],
+      [55,58,51,53],[53,56,49,54],[54,59,52,57],[57,62,55,59],[59,64,57,62],
+      [62,66,60,63],[63,65,58,60],[60,62,56,58],[58,61,55,59],[59,63,57,61],
+      [61,65,59,63],[63,68,61,66],[66,70,64,67],[67,69,62,64],[64,67,61,65],[65,71,63,69]
+    ];
+    var box = document.getElementById('candles');
+    if (!box) return;
+    var n = data.length, min = 100, max = 0, i;
+    for (i = 0; i < n; i++) {
+      if (data[i][1] > max) max = data[i][1];
+      if (data[i][2] < min) min = data[i][2];
+    }
+    // leave headroom so PDH/PDL lines sit outside the candle range
+    min -= 14; max += 14;
+    var range = max - min;
+    var colW = 100 / n;
+    for (i = 0; i < n; i++) {
+      var o = data[i][0], h = data[i][1], l = data[i][2], c = data[i][3];
+      var up = c >= o;
+      var el = document.createElement('div');
+      el.className = 'candle ' + (up ? 'up' : 'dn');
+      el.style.left = (i * colW + colW * 0.22) + '%';
+      el.style.width = (colW * 0.56) + '%';
+      el.style.top = '0'; el.style.bottom = '0';
+      var wick = document.createElement('div');
+      wick.className = 'wick';
+      wick.style.top = ((max - h) / range * 100) + '%';
+      wick.style.height = ((h - l) / range * 100) + '%';
+      var body = document.createElement('div');
+      body.className = 'body';
+      var bTop = Math.max(o, c), bBot = Math.min(o, c);
+      body.style.top = ((max - bTop) / range * 100) + '%';
+      body.style.height = Math.max(1.2, (bTop - bBot) / range * 100) + '%';
+      el.appendChild(wick); el.appendChild(body);
+      box.appendChild(el);
+    }
+  })();
+</script>
 
 </body>
 </html>
