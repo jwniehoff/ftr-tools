@@ -24,10 +24,11 @@
     --panel: #121820;
     --grid: #1C242E;
     --edge: #263140;
+    --divider: rgba(255, 255, 255, 0.08);
     --text: #E6EDF3;
     --muted: #8B98A5;
     --faint: #5C6875;
-    --qd-yellow: #FFD62E;
+    --qd-yellow: #FFF205;
     --mono: "Cascadia Code", "Consolas", ui-monospace, "SF Mono", Menlo, monospace;
     --sans: "Montserrat", "Segoe UI", system-ui, -apple-system, sans-serif;
   }
@@ -44,7 +45,7 @@
   nav {
     display: flex; align-items: center; gap: 28px;
     padding-top: 18px; padding-bottom: 18px;
-    border-bottom: 1px solid var(--grid);
+    border-bottom: 1px solid var(--divider);
   }
   .wordmark {
     font-family: var(--mono); font-weight: 700; font-size: 16px; letter-spacing: 0.08em;
@@ -78,7 +79,7 @@
   }
 
   section.block {
-    border-top: 1px solid var(--grid);
+    border-top: 1px solid var(--divider);
     padding-top: 48px; padding-bottom: 48px;
   }
   .logo-chip {
@@ -105,14 +106,14 @@
   }
   .btn:hover { text-decoration: none; }
   .btn-primary { background: var(--qd-yellow); color: #141000; }
-  .btn-primary:hover { background: #ffe15c; }
+  .btn-primary:hover { background: #E5D905; }
   .fine {
     font-family: var(--mono); font-size: 12px; color: var(--faint);
     margin-top: 14px; letter-spacing: 0.03em;
   }
 
   footer {
-    border-top: 1px solid var(--grid);
+    border-top: 1px solid var(--divider);
     padding-top: 36px; padding-bottom: 48px;
   }
   footer .row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
