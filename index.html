@@ -10,6 +10,13 @@
   gtag('js', new Date());
   gtag('config', 'G-D6NDBBGGNC');
 </script>
+<meta name="description" content="Precision NinjaTrader 8 indicators built by a futures trader: pre-measured drawing on hotkeys, one-click ATM-armed entries, automatic key levels. Lifetime licenses.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://indicators.futurestradingrevolution.com/">
+<meta property="og:title" content="FTR Indicators for NinjaTrader 8">
+<meta property="og:description" content="Charting tools that keep up with how fast you actually trade. Quick Draw, Quick Trade, News Events, PDH/L, and Watermark: built live, on real trades.">
+<meta property="og:image" content="https://indicators.futurestradingrevolution.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" href="favicon-64.png" sizes="64x64">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -27,7 +34,7 @@
     --text: #E6EDF3;
     --muted: #8B98A5;
     --faint: #5C6875;
-    --qd-yellow: #fff205;
+    --qd-yellow: #FFF205;
     --qd-orange: #FF9A3D;
     --qd-red: #FF4D5E;
     --qd-purple: #B78CFF;
@@ -92,7 +99,7 @@
   }
   .btn:hover { text-decoration: none; }
   .btn-primary { background: var(--qd-yellow); color: #141000; }
-  .btn-primary:hover { background: #fff863; }
+  .btn-primary:hover { background: #E5D905; }
   .btn-ghost { border-color: var(--edge); color: var(--text); background: transparent; }
   .btn-ghost:hover { border-color: var(--muted); }
 
@@ -148,15 +155,18 @@
   .chips { display: flex; gap: 6px; margin-left: auto; }
   .chip {
     font-family: var(--mono); font-size: 11px; font-weight: 700;
-    padding: 3px 8px; border-radius: 3px; color: #10130a;
-    opacity: 0.9;
+    padding: 3px 9px; border-radius: 4px;
+    background: rgba(18,24,32,0.75);
+    backdrop-filter: blur(3px);
+    border: 1px solid transparent;
+    opacity: 0.95;
   }
   .chip:hover { opacity: 1; }
-  .chip.c1 { background: var(--qd-yellow); }
-  .chip.c2 { background: var(--qd-orange); }
-  .chip.c3 { background: var(--qd-red); }
-  .chip.c4 { background: var(--qd-purple); }
-  .chip.c5 { background: var(--qd-blue); }
+  .chip.c1 { color: var(--qd-yellow); border-color: rgba(255,242,5,0.35); }
+  .chip.c2 { color: var(--qd-orange); border-color: rgba(255,150,60,0.35); }
+  .chip.c3 { color: var(--qd-red); border-color: rgba(229,72,77,0.4); }
+  .chip.c4 { color: var(--qd-purple); border-color: rgba(190,120,255,0.4); }
+  .chip.c5 { color: var(--qd-blue); border-color: rgba(61,166,255,0.4); }
 
   .chart {
     position: relative;
@@ -185,10 +195,9 @@
 
   .obj { position: absolute; opacity: 0; border-radius: 2px; }
   .stopbox {
-    left: 38%; top: 34%; width: 14%; height: 20%;
-    border: 1px solid var(--qd-yellow);
-    background: rgba(255,242,5,0.12);
-    box-shadow: 0 0 16px rgba(255,242,5,0.25);
+    left: 41%; top: 30%; width: 4.5%; height: 29%;
+    border: 1px solid rgba(255,242,5,0.55);
+    background: rgba(255,242,5,0.32);
     animation: appear1 9s infinite;
   }
   .stopbox .lbl, .rr .lbl {
@@ -202,15 +211,15 @@
     box-shadow: 0 0 8px rgba(61,166,255,0.55);
     animation: appear2 9s infinite;
   }
-  .rr { left: 74%; width: 16%; }
+  .rr { left: 78%; width: 7%; }
   .rr-risk {
     top: 58%; height: 13%;
-    border: 1px solid var(--risk); background: rgba(229,72,77,0.14);
+    border: 1px solid rgba(229,72,77,0.45); background: rgba(229,72,77,0.26);
     animation: appear3 9s infinite;
   }
   .rr-reward {
     top: 32%; height: 26%;
-    border: 1px solid var(--reward); background: rgba(70,196,110,0.13);
+    border: 1px solid rgba(70,196,110,0.4); background: rgba(70,196,110,0.24);
     animation: appear3 9s infinite;
   }
   .rr-reward .lbl { color: var(--reward); }
@@ -230,12 +239,46 @@
     54%, 68% { opacity: 1; left: 74%; top: 58%; }
     76%, 100%{ opacity: 0; left: 74%; top: 58%; }
   }
+  /* Quick Trade preview: entry, target, stop, appearing late in the cycle */
+  .qt-line {
+    position: absolute; left: 4%; width: 31%; height: 0;
+    border-top: 1px dashed currentColor; opacity: 0;
+    animation: appear4 9s infinite;
+  }
+  .qt-line .qlbl {
+    position: absolute; top: -15px; left: 0;
+    font-family: var(--mono); font-size: 9.5px; font-weight: 700;
+    white-space: nowrap;
+  }
+  .qt-t1 { top: 46%; color: var(--reward); }
+  .qt-entry { top: 61%; color: var(--reward); }
+  .qt-entry .qlbl {
+    background: rgba(18,24,32,0.9); border: 1px solid var(--reward);
+    padding: 2px 7px; border-radius: 3px; top: -22px;
+  }
+  .qt-stp { top: 73%; color: var(--risk); }
+
+  /* News Events panel: ambient, always present, whispering in the corner */
+  .news {
+    position: absolute; left: 3%; bottom: 4%;
+    background: rgba(18,24,32,0.88); border: 1px solid var(--edge);
+    border-radius: 6px; padding: 8px 11px;
+    display: flex; flex-direction: column; gap: 5px;
+    font-family: var(--mono); font-size: 9.5px;
+  }
+  .news .nrow { display: flex; align-items: center; gap: 7px; color: var(--muted); }
+  .news .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--qd-yellow); flex: none; }
+  .news .ntime { margin-left: 14px; color: var(--faint); }
+  .news .now { color: var(--risk); font-weight: 700; }
+  .news .nrow.hot { color: var(--text); }
+
   @keyframes appear1 { 0%, 9% { opacity: 0; } 13%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
   @keyframes appear2 { 0%, 35% { opacity: 0; } 39%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
   @keyframes appear3 { 0%, 60% { opacity: 0; } 64%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
+  @keyframes appear4 { 0%, 74% { opacity: 0; } 78%, 92% { opacity: 1; } 98%, 100% { opacity: 0; } }
 
   @media (prefers-reduced-motion: reduce) {
-    .obj { animation: none; opacity: 1; }
+    .obj, .qt-line { animation: none; opacity: 1; }
     .crosshair { animation: none; opacity: 0; }
   }
 
@@ -282,6 +325,7 @@
   .badge-lvl { background: rgba(255,77,255,0.12); color: var(--pdh); border: 1px solid rgba(255,77,255,0.3); }
   .badge-soon { background: rgba(139,152,165,0.1); color: var(--muted); border: 1px solid var(--edge); }
   .badge-free { background: rgba(46,230,230,0.1); color: var(--pdl); border: 1px solid rgba(46,230,230,0.3); }
+  .badge-news { background: rgba(61,166,255,0.1); color: var(--qd-blue); border: 1px solid rgba(61,166,255,0.3); }
   .product h3 { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 0 0 6px; }
   .product .tagline { color: var(--muted); font-size: 15px; margin: 0 0 20px; }
   .product ul {
@@ -298,7 +342,7 @@
     margin-top: auto;
     display: flex; align-items: center; gap: 16px;
     padding-top: 20px; border-top: 1px solid var(--grid);
-    min-height: 88px;
+    height: 116px;
   }
   .price { font-family: var(--mono); }
   .price .amt { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -309,13 +353,10 @@
     font-family: var(--mono);
   }
   .product.ghost {
-    grid-column: 1 / -1;
     border-style: dashed; background: transparent;
-    flex-direction: row; align-items: center; gap: 24px; flex-wrap: wrap;
-    padding: 22px 26px;
+    align-items: flex-start; gap: 8px;
   }
-  .product.ghost .badge { margin-bottom: 0; }
-  .product.ghost .btn { margin-left: auto; }
+  .product.ghost .btn { margin-top: 12px; }
   .product.ghost h3 { color: var(--muted); margin-bottom: 4px; }
   .product.ghost p { color: var(--faint); font-size: 14px; margin: 0; }
 
@@ -411,18 +452,18 @@
   <div>
     <p class="eyebrow">NinjaTrader 8 · Built by a futures trader</p>
     <h1>Charting tools that keep up with <span class="hl">how fast you actually trade</span>.</h1>
-    <p class="lede">Precision indicators for NinjaTrader 8: pre-measured drawing objects on hotkeys, automatic key levels, and risk you can see before you click the trigger.</p>
+    <p class="lede">Precision indicators for NinjaTrader 8: pre-measured drawing objects on hotkeys, one-click entries with your ATM attached, and risk you can see before you click the trigger.</p>
     <div class="ctas">
       <a class="btn btn-primary" href="#indicators">Browse indicators</a>
     </div>
-    <p class="note">One-time lifetime licenses · tied to you, not one machine · free updates</p>
+    <p class="note">One-time lifetime licenses · tied to your NinjaTrader login · free updates</p>
   </div>
 
   <div class="terminal" aria-label="Animated demo: preset drawing objects placing on a chart">
     <div class="term-head">
       <span class="sym">GC 12-26</span><span>· 5 min</span>
       <div class="chips">
-        <span class="chip c1">21▼</span><span class="chip c2">24▼</span><span class="chip c3">30▼</span><span class="chip c4">33▼</span><span class="chip c5">Ray</span>
+        <span class="chip c1">21▼</span><span class="chip c2">24▼</span><span class="chip c3">2R</span><span class="chip c4">Fib</span><span class="chip c5">Ray</span>
       </div>
     </div>
     <div class="chart">
@@ -433,12 +474,21 @@
       <div class="obj rayline"></div>
       <div class="obj rr rr-reward"><span class="lbl">2R target</span></div>
       <div class="obj rr rr-risk"></div>
+      <div class="qt-line qt-t1"><span class="qlbl">T1 48t</span></div>
+      <div class="qt-line qt-entry"><span class="qlbl">BUY 1 LMT · one tap</span></div>
+      <div class="qt-line qt-stp"><span class="qlbl">STP 24t</span></div>
+      <div class="news" aria-label="News Events panel demo">
+        <div class="nrow hot"><span class="dot"></span>Unemployment Claims<span class="ntime now">now</span></div>
+        <div class="nrow"><span class="dot"></span>Natural Gas Storage<span class="ntime">10:30 AM</span></div>
+        <div class="nrow"><span class="dot"></span>Treasury Currency Rpt<span class="ntime">4:30 PM</span></div>
+      </div>
       <div class="crosshair"></div>
     </div>
     <div class="term-foot">
       <span><span class="k">Ctrl+2</span> stop box</span>
       <span><span class="k">Ctrl+5</span> ray</span>
       <span><span class="k">Ctrl+6</span> risk:reward</span>
+      <span><span class="k">B</span> fire preset</span>
     </div>
   </div>
 </header>
@@ -470,6 +520,44 @@
       </article>
 
       <article class="product">
+        <span class="badge badge-flag">Flagship</span>
+        <h3>Quick Trade</h3>
+        <p class="tagline">Your whole playbook. One click each.</p>
+        <ul>
+          <li>One click, one order: arm a preset, click a price, and your order fires there with your ATM strategy attached, stop and target included</li>
+          <li>8 preset slots: buy or sell, each with its own ATM template, quantity, color, label, and hotkey</li>
+          <li>Live preview at your cursor: tick-snapped entry, order type, and your ATM's actual stop and target drawn on the chart before you commit</li>
+          <li>The click picks the order type: below market is a limit, above is a stop, and the preview flips LMT and STP live</li>
+          <li>Double-click safe: the slot disarms the instant it fires, so one click can never become two orders</li>
+          <li>Plays with Chart Trader: orders route to its instrument, and your ATM manages the trade exactly as if you entered it by hand</li>
+        </ul>
+        <div class="buy">
+          <span class="price"><span class="amt">$149</span><span class="per">one-time<br>lifetime license</span></span>
+          <a class="btn btn-primary" href="#faq">Get Quick Trade</a>
+        </div>
+        <p class="trial-line">Sim-first. Live when you say.</p>
+      </article>
+
+      <article class="product">
+        <span class="badge badge-news">News</span>
+        <h3>News Events</h3>
+        <p class="tagline">Today's releases, on the chart. Gone when they're over.</p>
+        <ul>
+          <li>Every economic release still ahead in the trading day, in a glass panel on your price action: no second monitor, no calendar tab</li>
+          <li>Whispers until it matters: faded while nothing is near, full presence as a release approaches, with a gentle pulse in the final two minutes</li>
+          <li>Clock, then countdown, then now: times switch to a live per-second countdown inside your warning window, then flag the release as it prints</li>
+          <li>Color and impact at a glance: your warning color inside the window, red once released, impact dots for high, medium, and low</li>
+          <li>Filter to what you trade: choose currencies and impact levels, and released events drop off minutes after they print</li>
+          <li>Built for the futures session: the day rolls at 6 PM, so tomorrow's numbers are listed during tonight's Globex, with an offline cache so a connection hiccup never leaves you blind</li>
+        </ul>
+        <div class="buy">
+          <span class="price"><span class="amt">$69</span><span class="per">one-time<br>lifetime license</span></span>
+          <a class="btn btn-primary" href="#faq">Get News Events</a>
+        </div>
+        <p class="trial-line">One download feeds every chart.</p>
+      </article>
+
+      <article class="product">
         <span class="badge badge-lvl">Key levels</span>
         <h3>PDH/L</h3>
         <p class="tagline">Yesterday's high and low, exactly where you need them.</p>
@@ -484,7 +572,7 @@
           <span class="price"><span class="amt">$49</span><span class="per">one-time<br>lifetime license</span></span>
           <a class="btn btn-primary" href="#faq">Get PDH/L</a>
         </div>
-        <p class="trial-line">Also included in the full kit below.</p>
+        <p class="trial-line">Also in the full kit below.</p>
       </article>
 
       <article class="product">
@@ -492,7 +580,7 @@
         <h3>Watermark</h3>
         <p class="tagline">Your instrument and date, stamped on every chart.</p>
         <ul>
-          <li>Plots the instrument and session date automatically, always current</li>
+          <li>Plots the instrument, session date, and contract rollover date automatically, always current</li>
           <li>Or set your own text: account name, desk rules, anything</li>
           <li>Position, font, color, and opacity fully configurable</li>
           <li>Zero performance cost, loads instantly on any chart</li>
@@ -516,10 +604,10 @@
 
     <div class="bundle">
       <div>
-        <h3>The full kit</h3>
-        <p>Quick Draw + PDH/L together: every tool, one license email, lifetime updates.</p>
+        <h3>The FTR Complete Kit</h3>
+        <p>Quick Draw + Quick Trade + News Events + PDH/L: every paid tool, one license email, lifetime updates.</p>
       </div>
-      <span class="price"><span class="was">$198</span><span class="amt">$179</span><span class="per">one-time</span></span>
+      <span class="price"><span class="was">$416</span><span class="amt">$299</span><span class="per">one-time</span></span>
       <a class="btn btn-primary" href="#faq">Get the kit</a>
     </div>
   </div>
@@ -537,7 +625,7 @@
       </div>
       <div class="cell">
         <h4>Licensed &amp; supported</h4>
-        <p>Licensing through NinjaTrader's own vendor system, issued to your NinjaTrader account email. Your license follows your account, not a single computer, with updates for the life of the product.</p>
+        <p>Licensed to your NinjaTrader login through their own vendor system, so your tools follow you to any machine. Updates for the life of the product.</p>
       </div>
       <div class="cell">
         <h4>Crash-proof by design</h4>
@@ -562,11 +650,7 @@
       </details>
       <details>
         <summary>How is the license delivered?</summary>
-        <p>Immediately. Checkout delivers your import file right away with a three-day open window built in, so you can be on your charts within minutes while your permanent license is activated to your NinjaTrader account email. Your license follows your account, not a single machine, so a new computer means it simply comes with you. No waiting, no gap in access.</p>
-      </details>
-      <details>
-        <summary>What do you need from me at checkout?</summary>
-        <p>One thing: your NinjaTrader account email, the one you use to log in to NinjaTrader. Your license is issued to that email, so make sure it matches your account exactly. If you use a different email for receipts, that's fine; only the NinjaTrader account email field controls licensing.</p>
+        <p>Immediately. Checkout delivers your import file right away with a three-day open window built in, so you can be on your charts within minutes while your permanent license is activated to the NinjaTrader login email you provide at checkout. No waiting, no gap in access, and because the license lives on your NinjaTrader account, it follows you to any machine you log into.</p>
       </details>
       <details>
         <summary>How do I install an indicator?</summary>
@@ -580,7 +664,8 @@
         <summary>Do updates cost extra?</summary>
         <p>No. Lifetime licenses include every update to that product. Improvements ship to all customers as new importable versions.</p>
       </details>
-      <p class="faq-support">Something else? Email <a href="mailto:support@futurestradingrevolution.com">support@futurestradingrevolution.com</a> and ask. Support goes to the person who built the tools. Full <a href="https://www.futurestradingrevolution.com/disclaimer">disclosures here</a>.</p>
+      <p class="faq-support">Something else? Email <a href="mailto:support@futurestradingrevolution.com">support@futurestradingrevolution.com</a>
+      <a href="https://www.futurestradingrevolution.com/disclaimer">Disclosures</a> and ask. Support goes to the person who built the tools.</p>
     </div>
   </div>
 </section>
@@ -611,7 +696,7 @@
       <a href="#faq">FAQ</a>
     </div>
     <p class="disclaimer">These tools are charting and workflow utilities. They do not generate trade signals, predict price movement, or constitute trading advice. FTR, Futures Trading Revolution.</p>
-    <p class="disclaimer"><strong>Risk Disclosure:</strong> Futures and forex trading contains substantial risk and is not for every investor. An investor could potentially lose all or more than the initial investment. Risk capital is money that can be lost without jeopardizing one's financial security or lifestyle. Only risk capital should be used for trading and only those with sufficient risk capital should consider trading. Past performance is not necessarily indicative of future results.</p>
+    <p class="disclaimer"><strong>Risk Disclosure:</strong> Futures and forex trading contains substantial risk and is not for every investor. An investor could potentially lose all or more than the initial investment. Risk capital is money that can be lost without jeopardizing ones' financial security or lifestyle. Only risk capital should be used for trading and only those with sufficient risk capital should consider trading. Past performance is not necessarily indicative of future results.</p>
     <p class="disclaimer"><strong>Hypothetical Performance Disclosure:</strong> Hypothetical performance results have many inherent limitations, some of which are described below. No representation is being made that any account will or is likely to achieve profits or losses similar to those shown; in fact, there are frequently sharp differences between hypothetical performance results and the actual results subsequently achieved by any particular trading program. One of the limitations of hypothetical performance results is that they are generally prepared with the benefit of hindsight. In addition, hypothetical trading does not involve financial risk, and no hypothetical trading record can completely account for the impact of financial risk of actual trading. for example, the ability to withstand losses or to adhere to a particular trading program in spite of trading losses are material points which can also adversely affect actual trading results. There are numerous other factors related to the markets in general or to the implementation of any specific trading program which cannot be fully accounted for in the preparation of hypothetical performance results and all which can adversely affect trading results.</p>
     <p class="disclaimer"><strong>Testimonial Disclosure:</strong> Testimonials appearing on this website may not be representative of other clients or customers and is not a guarantee of future performance or success.</p>
     <p class="disclaimer">NinjaTrader® is a registered trademark of NinjaTrader Group, LLC. No NinjaTrader company has any affiliation with the owner, developer, or provider of the products or services described herein, or any interest, ownership or otherwise, in any such product or service, or endorses, recommends or approves any such product or service.</p>
